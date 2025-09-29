@@ -11,19 +11,27 @@ import java.util.Collections;
 import java.util.List;
 
 
-//Colect all event to an in-memory list
-//simulate a mod who reviews changes
+/*
+ Observer that collects all Events into an in-memory list.
+ This simulates a moderator tracking changes. Events are accumulated
+ as they arrive and can be retrieved as an immutable snapshot.
+ */
 public class ModeratorObserver implements DataStoreObserver{
 
+    //Internal list of all events observed so far
     private final List<Event> events = new ArrayList<>();
 
+     //Called by the {@link DataStore} when an event occurs
+     //@param e event to record, must not be null
     @Override
     public void onEvent(Event e) {
         events.add(e);
     }
 
-    //return an immuatblae snapshot of all events seen so far
-    public List<Event> getEvents() {
+
+     //Returns an immutable snapshot of all events observed so far.
+     //@return unmodifiable list of events, never null
+     public List<Event> getEvents() {
         return Collections.unmodifiableList(events);
     }
 

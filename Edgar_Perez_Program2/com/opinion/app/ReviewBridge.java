@@ -13,6 +13,7 @@ import com.opinion.Review;
  */
 public final class ReviewBridge {
 
+    //Non-instantiable utility class.
     private ReviewBridge() { }
 
     /*
@@ -27,15 +28,28 @@ public final class ReviewBridge {
         return new Review(productName, toEnum(ratingStars), comment);
     }
 
-    //@return product name (record accessor)
-    public static String getName(final Review r) { return r.name(); }
+    //@returns the product name from a review
+    public static String getName (final Review r) {
+        return r.name();
+    }
 
-    //@return numeric star rating (1..3) via enum
-    public static int getStars(final Review r) { return r.rating().getStars(); }
+    //@Return the numeric star rating from a review.
+    public static int getStars(final Review r) {
+        return r.rating().getStars();
+    }
 
-    //@return comment text (record accessor)
-    public static String getComment(final Review r) { return r.comment(); }
+    //@returns the comment text from a review.
+    public static String getComment(final Review r) {
+        return r.comment();
+    }
 
+
+    /*
+    Maps an integer star value to its Rating} enum
+    @param stars integer in the range [1, 3]
+    @return corresponding Rating
+    @throws IllegalArgumentException if stars is outside the range [1, 3]
+            */
     private static Rating toEnum(final int stars) {
         return switch (stars) {
             case 1 -> Rating.ONE;

@@ -3,6 +3,7 @@
  Assignment: Program 2
  Class: CSC 2040
  */
+
 package com.opinion.app;
 
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ public final class Validators {
 
     private Validators() { }
 
-    //Accepts alnum and dot on both sides of @ per spec
+    //Accepts alnum and dot on both sides of @
     private static final Pattern EMAIL = Pattern.compile("^[A-Za-z0-9.]+@[A-Za-z0-9.]+$");
 
     //Letters and spaces only

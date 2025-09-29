@@ -1,28 +1,38 @@
-package com.opinion;
-
 /*
  Author:     Edgar Perez
  Assignment: Program 1 - Reviews, Reduced Boilerplate
  Class:      CSC 2040
  */
 
+package com.opinion;
+
 import java.util.Objects;
 
-/**
- * Immutable value type representing a single product review.
- * Specification:
- * - name: 1..64 chars, printable ASCII (32..126), no '#'
- * - rating: non-null (Rating.ONE/TWO/THREE)
- * - comment: 1..254 chars, printable ASCII, no '#'
- *
- * String form:
- *   &lt;name&gt; with rating of ONE star(s): &lt;comment&gt;
+
+/*
+ Immutable value type representing a single product review.
+ Each review contains a product name, a Rating, and a comment.
  */
 public record Review(String name, Rating rating, String comment) {
 
+
+    //Maximum allowed product name length
     private static final int MAX_NAME_LEN = 64;
+
+    //Maximum allowed comment length
     private static final int MAX_COMMENT_LEN = 254;
 
+
+
+    /*
+     Canonical constructor validates fields.
+
+     @param name    product name
+     @param rating  rating enum value
+     @param comment review comment
+     @throws NullPointerException if any argument is null
+     @throws IllegalArgumentException if constraints are violated
+     */
     public Review {
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(rating, "rating");
@@ -39,6 +49,18 @@ public record Review(String name, Rating rating, String comment) {
         ensurePrintableAsciiNoHash("comment", comment);
     }
 
+
+
+    /*
+     Factory method for constructing a Review} from raw strings.
+
+     @param rawName    product name string
+     @param rawRating  rating string, must match
+     @param rawComment comment string
+     @return constructed review
+     @throws NullPointerException if any parameter is null
+     @throws IllegalArgumentException if validation fails or rating is invalid
+     */
     public static Review create(String rawName, String rawRating, String rawComment) {
         Objects.requireNonNull(rawName, "Bad format: missing name");
         Objects.requireNonNull(rawRating, "Bad format: missing rating");
@@ -48,6 +70,13 @@ public record Review(String name, Rating rating, String comment) {
         return new Review(rawName, rating, rawComment);
     }
 
+
+    /*
+     Ensures that a string contains only printable ASCII characters
+     @param label field name for error messages
+     @param s string to validate
+     @throws IllegalArgumentException if string contains illegal characters
+     */
     private static void ensurePrintableAsciiNoHash(String label, String s) {
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
@@ -60,6 +89,12 @@ public record Review(String name, Rating rating, String comment) {
         }
     }
 
+
+
+    /*
+     Returns a human-readable string representation of review.
+     @return formatted summary string
+     */
     @Override
     public String toString() {
         return name + " with rating of " + rating.name() + " star(s): " + comment;

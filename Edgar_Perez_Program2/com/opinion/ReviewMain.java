@@ -1,9 +1,3 @@
-package com.opinion;
-
-import java.io.IOException;
-import java.io.PrintStream;
-import java.nio.file.Path;
-import java.util.List;
 
 /*
  * Author:     Edgar Perez
@@ -11,14 +5,55 @@ import java.util.List;
  * Class:      CSC 2040
 */
 
+package com.opinion;
+
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.file.Path;
+import java.util.List;
+
+
+
+/*
+ Console entry point for Program 1.
+
+ Responsibilities:
+
+ Read reviews from a file via ReviewReader
+ Print the number of reviews, then the lowest and highest rated reviews.
+ Exit with appropriate status codes on error
+
+ */
 public final class ReviewMain {
 
+
+    //Exit code for bad usage, wrong argument count
     private static final int EXIT_BAD_USAGE = 2;
+
+    //Exit code for I/O error while reading file
     private static final int EXIT_IO_ERROR = 3;
+
+
+    //Exit code for malformed review data
     private static final int EXIT_BAD_DATA = 4;
 
+    //Non-instantiable utility class.
     private ReviewMain() { }
 
+
+
+
+
+
+    /*
+    Runs the application with the given arguments and output streams.
+
+     @param args command line arguments, must contain exactly one file path
+     @param out  standard output stream
+     @param err  error output stream
+     @return process exit code: 0 on success, one of #EXIT_BAD_USAGE,
+     #EXIT_IO_ERROR, or #EXIT_BAD_DATA on error
+     */
     public static int run(String[] args, PrintStream out, PrintStream err) {
         if (args == null || args.length != 1) {
             err.println("USAGE: java com.opinion.ReviewMain <path-to-reviews>");
@@ -58,6 +93,10 @@ public final class ReviewMain {
         return 0;
     }
 
+
+
+     //Standard entry point
+     //@param args command line arguments
     public static void main(String[] args) {
         System.exit(run(args, System.out, System.err));
     }

@@ -13,7 +13,17 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-//Console UI for Review Manager application.
+/*
+ Console UI for the Review Manager application.
+
+ Responsibilities:
+
+ Render role-aware menus.
+ Route user choices to actions (search, login, create users, add/approve reviews).
+ Seed demo data when backing store is empty.
+
+ This class is the UI entry point and is the only place that prints to the console.
+ */
 public final class ReviewManager {
 
     private final DataStore ds = DataStoreMemory.getInstance();
@@ -25,6 +35,7 @@ public final class ReviewManager {
 
     public static void main(String[] args) {
         ReviewManager app = new ReviewManager();
+        app.ensureSeedData();
         app.wireObservers();
         app.loop();
     }
@@ -37,7 +48,7 @@ public final class ReviewManager {
     private void loop() {
         while (true) {
             List<Runnable> actions = renderMenuAndGetActions();
-            int choice = promptInt("Select> ", 0, actions.size() - 1);
+            int choice = promptInt("Choice> ", 0, actions.size() - 1);
             if (choice == -1) { // Invalid input
                 System.out.println("Invalid selection");
                 continue;
@@ -96,6 +107,28 @@ public final class ReviewManager {
         }, () -> System.out.println("Invalid login"));
     }
 
+    //Information for testing to ensure functionality
+    private void ensureSeedData() {
+
+        //Admin account for login demonstration
+        if (ds.findUserByEmail("admin@review.com").isEmpty()) {
+            ds.addUser(new Administrator("admin@review.com", "Admin", java.time.LocalDate.now()));
+        }
+
+        //Seed Bob + 3 reviews if none exist
+        //IMPORTANT: "" should return all
+        if (ds.searchUserReviews("").isEmpty()) {
+            Reviewer bob = new Reviewer("bob@example.com", "Bob", LocalDate.now(), "Clothing and stuff");
+
+            ds.addUser(bob);
+
+            ds.addUserReview(new UserReview(ReviewBridge.buildReview("Toy", 2, "Lumpy"), bob));
+            ds.addUserReview(new UserReview(ReviewBridge.buildReview("Bike", 3, "Smooth ride"), bob));
+            ds.addUserReview(new UserReview(ReviewBridge.buildReview("Broken Glass", 1, "Sharp edges"), bob));
+        }
+    }
+
+
 
     private void actionAddUserReview() {
         if (!(currentUser instanceof Reviewer reviewer)) return;
@@ -140,7 +173,7 @@ public final class ReviewManager {
             ds.addUser(new Administrator(email, name, LocalDate.now()));
         } else {
             System.out.println("Invalid type: " + type);
-            return;
+            //return;
         }
     }
 

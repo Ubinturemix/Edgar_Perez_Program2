@@ -1,8 +1,9 @@
-/************************************************
+/*
  * Author:     Edgar Perez
  * Assignment: Program 2
  * Class:      CSC 2040 Software Engineering
- ************************************************/
+ */
+
 package com.opinion.test;
 
 import com.opinion.Review;
@@ -39,17 +40,17 @@ class UserReviewApprovalTest {
         Administrator a = new Administrator("admin2@x.y", "Alice Admin", LocalDate.of(2020,2,2));
 
 
-        // invalid date
+        //invalid date
         assertThrows(IllegalArgumentException.class,
                 () -> new ReviewApproval(ur, a, LocalDate.of(2009,12,31)));
 
-        // null args
+        //null args
         assertThrows(IllegalArgumentException.class,
                 () -> new ReviewApproval(null, a, LocalDate.now()));
         assertThrows(IllegalArgumentException.class,
                 () -> new ReviewApproval(ur, null, LocalDate.now()));
 
-        // valid
+        //valid
         assertDoesNotThrow(() -> new ReviewApproval(ur, a, LocalDate.now()));
     }
 
@@ -61,7 +62,7 @@ class UserReviewApprovalTest {
         UserReview ur = new UserReview(rev, r);
         Administrator a = new Administrator("admin3@x.y", "Alice Admin", LocalDate.of(2020,2,2));
 
-        // use test hook to add approvals (no datastore yet)
+        //use test hook to add approvals (no datastore yet)
         //TestHooks.addApproval(ur, new ReviewApproval(ur, a, LocalDate.now()));
         //TestHooks.addApproval(ur, new ReviewApproval(ur, a, LocalDate.now()));
 

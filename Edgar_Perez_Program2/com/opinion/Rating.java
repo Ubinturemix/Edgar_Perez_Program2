@@ -6,38 +6,31 @@ package com.opinion;
  Class:      CSC 2040
  */
 
-/**
- * Represents a discrete rating with an associated star count.
- * Allowed ratings: ONE, TWO, THREE.
- */
+//Represents a discrete rating with an associated star count.
+//Allowed ratings: ONE, TWO, THREE.
 public enum Rating {
-    /** One-star rating. */
+    //One-star rating.
     ONE(1),
-    /** Two-star rating. */
+    //Two-star rating.
     TWO(2),
-    /** Three-star rating. */
+    //Three-star rating.
     THREE(3);
 
-    /** star count for the rating */
+    //star count for the rating
     private final int stars;
 
-    /**
-     * Construct a Rating with the given star count.
-     *
-     * @param stars number of stars (positive)
-     */
+    //Construct a Rating with the given star count
+     //@param stars number of stars (positive)
     Rating(int stars) {
         this.stars = stars;
     }
 
-    /**
-     * Returns how many stars this rating represents.
-     *
-     * @return star count (1, 2, or 3)
+    /*
+     Returns how many stars this rating represents.
+     @return star count (1, 2, or 3)
      */
     public int getStars() {
         return stars;
     }
 
-    // Note to self: prefer Rating.valueOf(String) at call sites instead of a custom fromString().
 }

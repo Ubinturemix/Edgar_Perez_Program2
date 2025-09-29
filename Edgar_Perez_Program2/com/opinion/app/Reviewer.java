@@ -8,16 +8,22 @@ package com.opinion.app;
 
 import java.time.LocalDate;
 
-//Reviewer can create UserReviews; must declare a specialization
+/*
+ A User who can author UserReviews.
+
+ Reviewers are required to declare a specialization string that
+ describes their domain expertise. The specialization must be
+ between 10 and 300 characters long (inclusive).
+ */
 public class Reviewer extends User {
 
     private final String specialization;
 
 
-     //@param email unique reviewer email
-     //@param name reviewer name
-     //@param registrationDate >= 2010-01-01
-     //@param specialization 10..300 characters
+    //@param email unique reviewer email
+    //@param name reviewer name
+    //@param registrationDate >= 2010-01-01
+    //@param specialization 10..300 characters
 
     public Reviewer(final String email,
                     final String name,
@@ -30,6 +36,9 @@ public class Reviewer extends User {
         this.specialization = specialization;
     }
 
-    //@return reviewer specialization
+
+     //Returns this reviewer's specialization string.
+     //@return specialization, never null
+
     public String getSpecialization() { return specialization; }
 }

@@ -1,3 +1,10 @@
+/*
+ Author:     Edgar Perez
+ Assignment: Program 1 - Reviews, Reduced Boilerplate
+ Class:      CSC 2040
+ */
+
+
 package com.opinion;
 
 import java.io.IOException;
@@ -7,30 +14,29 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-/************************************************
- * Author:     Edgar Perez
- * Assignment: Program 1 - Reviews, Reduced Boilerplate
- * Class:      CSC 2040
- ************************************************/
 
-/**
- * Utility for reading {@link Review} records from a text file.
- * Expected format per-line: name#RATING#comment
- * Optional trailing '#' after comment tolerated.
- */
+ //Utility for reading records from a text file.
+ //Expected format per-line: name#RATING#comment
+ //Optional trailing '#' after comment tolerated.
 public final class ReviewReader {
 
+    //Field delimiter used in the input format.
     private static final char DELIM = '#';
 
-    private ReviewReader() { }
+     //Regex-ready string version of to avoid magic-literals.
+     private static final String DELIM_STR = String.valueOf(DELIM);
 
-    /**
-     * Reads reviews from {@code path}. Blank lines are ignored.
-     *
-     * @param path path to input file
-     * @return list of parsed reviews
-     * @throws IOException if file can't be read
-     * @throws IllegalArgumentException if a line is malformed
+
+     //Regex-ready string version of {@link #DELIM} to avoid magic-literals
+     private ReviewReader() { }
+
+    /*
+     Reads reviews from path. Blank lines are ignored.
+
+     @param path path to input file
+     @return list of parsed reviews
+     @throws IOException if file can't be read
+     @throws IllegalArgumentException if a line is malformed
      */
     public static List<Review> read(Path path) throws IOException {
         List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
@@ -44,9 +50,7 @@ public final class ReviewReader {
         return out;
     }
 
-    /**
-     * Parse single line "name#RATING#comment" (or with trailing '#').
-     */
+    //Parse single line "name#RATING#comment" (or with trailing '#')
     static Review parse(String line) {
         String work = line;
         if (!work.isEmpty() && work.charAt(work.length() - 1) == DELIM) {

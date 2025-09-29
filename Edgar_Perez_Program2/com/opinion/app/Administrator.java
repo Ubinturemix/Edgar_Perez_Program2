@@ -11,30 +11,43 @@ import java.time.LocalDateTime;
 
 
 //Administrator can create users and approve reviews
-//Tracks last access time, updated on successful login
+//Each administrator tracks the timestamp of their most recent successful login
 public class Administrator extends User {
 
     //Most recent successful login timestamp, null until first login
     private LocalDateTime lastAccessDate;
 
 
-    //Construct an adminisrator
-    //@param email unique admin email
-    //@param name admin display name
-    //@param regisrtationDate must be valid
+    /*
 
+     Constructs an Administrator.
+     @param email   unique administrator email
+     @param name  administrator display name
+     @param registrationDate registration date
+     @throws NullPointerException
+     @throws IllegalArgumentException if validation rules are violated
+     */
     public Administrator(final String email, final String name, final LocalDate registrationDate){
 
         super(email, name, registrationDate);
 
     }
 
-    //@return last access timestamp, or null if never loggen in
+
+    /*
+     Returns the last access timestamp.
+     @return timestamp of most recent login, or null if never logged in
+     */
     public LocalDateTime getLastAccessDate() {
+
         return lastAccessDate;
     }
 
-    //Sets last access timestamp to now, call after successful authentication
+
+    /*
+     Updates lastAccessDate to current time.
+     Call this after a successful authentication.
+     */
     public void touchAccessNow(){
 
         this.lastAccessDate = LocalDateTime.now();

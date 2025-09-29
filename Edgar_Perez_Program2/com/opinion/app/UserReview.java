@@ -19,7 +19,12 @@ public class UserReview {
     private final List<ReviewApproval> approvals = new ArrayList<>();
 
 
-    //@throws IllegalArgumentException if review or reviewer is null
+    /*
+     Constructs a {@code UserReview}.
+     @param review   the base review; must not be null
+     @param reviewer the review's author, must not be null
+     @throws IllegalArgumentException if review or reviewer is null
+     */
     public UserReview(final Review review, final Reviewer reviewer) {
         if (review == null || reviewer == null)
             throw new IllegalArgumentException("Review and Reviewer can't be null");
@@ -27,13 +32,26 @@ public class UserReview {
         this.reviewer = reviewer;
     }
 
-    public Review getReview() {return review;}
-    public Reviewer getReviewer() {return reviewer;}
 
+    //Returns underlying review
+     //@return non-null review
+    public Review getReview() {
+        return review;
+    }
+
+
+    //Returns the Reviewer
+     //@return non-null reviewer
+    public Reviewer getReviewer() {
+        return reviewer;
+    }
+
+    //Returns immutable view of approvals
     public List<ReviewApproval> getApprovals() {
         return Collections.unmodifiableList(approvals);
     }
 
+    //Add an approval to the user review
     void addApproval(final ReviewApproval a) {
         approvals.add(Objects.requireNonNull(a, "approval"));
 
